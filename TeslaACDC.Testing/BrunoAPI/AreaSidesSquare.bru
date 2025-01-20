@@ -1,0 +1,20 @@
+meta {
+  name: AreaSidesSquare
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5019/api/tesla/areasidessquare
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sideLenght_1": 2,
+    "sideLenght_2": 2,
+    "sideLenght_3": 2,
+    "sideLenght_4": 2
+  }
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Post Album List
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5019/api/tesla/postalbums
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "name": "AM",
+      "year": 2013,
+      "genre": "Indie Rock",
+      "artist": "Arctic Monkeys"
+    },
+    {
+      "name": "Smithereens",
+      "year": 2022,
+      "genre": "Lo-fi",
+      "artist": "Joji"
+    }
+  ]
+}

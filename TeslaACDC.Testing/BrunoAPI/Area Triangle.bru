@@ -1,0 +1,18 @@
+meta {
+  name: Area Triangle
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:5019/api/tesla/areatriangle
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "baseTriangle": 8,
+    "heightTriangle": 10
+  }
+}

@@ -1,62 +1,72 @@
 namespace TeslaACDC.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using TeslaACDC.Model;
+using TeslaACDC.Business.Interfaces;
+using TeslaACDC.Business.Services;
+using TeslaACDC.Data.Models;
 [ApiController]
 [Route("api/[controller]")]
 public class TeslaController : ControllerBase
 {
 
-  [HttpGet]
-  [Route("GetArrayAlbums")]
-  public async Task<IActionResult> GetArrayAlbums()
-  {
-    List<Album> albums = new List<Album>();
-    albums.Add(new Album{
-      name = "AM",
-      year = 2013,
-      genre = "Indie Rock",
-      artist = "Arctic Monkeys"
-    });
-    albums.Add(new Album{
-      name = "After Hours",
-      year = 2020,
-      genre = "R&B contemporáneo",
-      artist = "The Weekend"
-    });
-    albums.Add(new Album{
-      name = "Smithereens",
-      year = 2022,
-      genre = "Lo-fi",
-      artist = "Joji"
-    });
+  private readonly IAlbumService _albumService;
+  private readonly IMatematika _matematikaService;
 
-    return Ok(albums);
+    public TeslaController(IAlbumService albumService, IMatematika matematikaService)
+    {
+        _albumService = albumService;
+        _matematikaService = matematikaService;
+    }
+
+  [HttpGet]
+  [Route("GetAlbums")]
+  public async Task<IActionResult> GetAlbumList()
+  {
+    var list = await _albumService.GetAlbumList();
+
+    return Ok(list);
   }
 
   [HttpPost]
-  [Route("PostArrayAlbums")]
-  public async Task<IActionResult> PostArrayAlbums(List<Album> albums)
+  [Route("PostAlbums")]
+  public async Task<IActionResult> PostAlbumsList(List<Album> albums)
   {
-    return Ok(albums);
+    var list = await _albumService.PostAlbumList(albums);
+
+    return Ok(list);
   }
 
 
   [HttpPost]
   [Route("Addition")]
-  public async Task<IActionResult> Addition(Addition addition)
+  public async Task<IActionResult> Addition(DtoAddition dtoAddition)
   {
-    var result =  addition.number_one + addition.number_two;
-    return Ok("La suma de: " + addition.number_one + " + " + + addition.number_two + " = " + result);
+    var addition = await _matematikaService.Addition(dtoAddition);
+    return Ok($"La suma de {dtoAddition.number_1} + {dtoAddition.number_2} = { addition }");
   }
 
   [HttpPost]
   [Route("AreaSquare")]
-  public async Task<IActionResult> AreaSquare(Square square)
+  public async Task<IActionResult> AreaSquare(DtoSquare dtoSquare)
   {
-    var area = square.side * square.side;
-    return Ok("El área de un cuadrado cuyo lado mide " + square.side + " es igual a " + area);
+    var areaSquare = await _matematikaService.AreaSquare(dtoSquare);
+    return Ok($"El área de un cuadrado cuyo lado mide {dtoSquare.sideLenght} es : {areaSquare}^2");
+  }
+
+  [HttpPost]
+  [Route("AreaSidesSquare")]
+  public async Task<IActionResult> AreaSidesSquare(DtoSidesSquare dtoSidesSquare)
+  {
+    var areaSidesSquare = await _matematikaService.AreaSidesSquare(dtoSidesSquare);
+    return Ok($"Los lados del cuadrado son {dtoSidesSquare.sideLenght_1}, {dtoSidesSquare.sideLenght_2}, {dtoSidesSquare.sideLenght_3}, {dtoSidesSquare.sideLenght_4} y su área es: {areaSidesSquare}^2");
+  }
+
+  [HttpPost]
+  [Route("AreaTriangle")]
+  public async Task<IActionResult> AreaTriangle(DtoTriangle dtoTriangle)
+  {
+    var areaTriangle = await _matematikaService.AreaTriangle(dtoTriangle);
+    return Ok($"El área de un triangulo cuya base es {dtoTriangle.baseTriangle} y su altura es {dtoTriangle.heightTriangle} es {areaTriangle}^2");
   }
 
 }

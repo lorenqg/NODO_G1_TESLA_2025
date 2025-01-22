@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TeslaACDC.Business.Interfaces;
 using TeslaACDC.Business.Services;
 using TeslaACDC.Data.Models;
+using TeslaACDC.Data.DTO;
 [ApiController]
 [Route("api/[controller]")]
 public class TeslaController : ControllerBase
@@ -39,34 +40,38 @@ public class TeslaController : ControllerBase
 
   [HttpPost]
   [Route("Addition")]
-  public async Task<IActionResult> Addition(DtoAddition dtoAddition)
+  public async Task<IActionResult> Addition(Addition addition)
   {
-    var addition = await _matematikaService.Addition(dtoAddition);
-    return Ok($"La suma de {dtoAddition.number_1} + {dtoAddition.number_2} = { addition }");
+    var resAddition = await _matematikaService.Addition(addition);
+    return Ok($"La suma de {addition.number_1} + {addition.number_2} = { resAddition }");
   }
 
   [HttpPost]
   [Route("AreaSquare")]
-  public async Task<IActionResult> AreaSquare(DtoSquare dtoSquare)
+  public async Task<IActionResult> AreaSquare(Square square)
   {
-    var areaSquare = await _matematikaService.AreaSquare(dtoSquare);
-    return Ok($"El área de un cuadrado cuyo lado mide {dtoSquare.sideLenght} es : {areaSquare}^2");
+    var areaSquare = await _matematikaService.AreaSquare(square);
+    return Ok($"El área de un cuadrado cuyo lado mide {square.sideLenght} es : {areaSquare}^2");
   }
 
   [HttpPost]
   [Route("AreaSidesSquare")]
-  public async Task<IActionResult> AreaSidesSquare(DtoSidesSquare dtoSidesSquare)
+  public async Task<IActionResult> AreaSidesSquare(SidesSquare sidesSquare)
   {
-    var areaSidesSquare = await _matematikaService.AreaSidesSquare(dtoSidesSquare);
-    return Ok($"Los lados del cuadrado son {dtoSidesSquare.sideLenght_1}, {dtoSidesSquare.sideLenght_2}, {dtoSidesSquare.sideLenght_3}, {dtoSidesSquare.sideLenght_4} y su área es: {areaSidesSquare}^2");
+    var areaSidesSquare = await _matematikaService.AreaSidesSquare(sidesSquare);
+    if ( areaSidesSquare == 0 ){
+      return Ok("Un cuadrado debe tener todos los lados iguales");
+    } else {
+      return Ok($"Los lados del cuadrado son {sidesSquare.sideLenght_1}, {sidesSquare.sideLenght_2}, {sidesSquare.sideLenght_3}, {sidesSquare.sideLenght_4} y su área es: {areaSidesSquare}^2");
+    }
   }
 
   [HttpPost]
   [Route("AreaTriangle")]
-  public async Task<IActionResult> AreaTriangle(DtoTriangle dtoTriangle)
+  public async Task<IActionResult> AreaTriangle(Triangle triangle)
   {
-    var areaTriangle = await _matematikaService.AreaTriangle(dtoTriangle);
-    return Ok($"El área de un triangulo cuya base es {dtoTriangle.baseTriangle} y su altura es {dtoTriangle.heightTriangle} es {areaTriangle}^2");
+    var areaTriangle = await _matematikaService.AreaTriangle(triangle);
+    return Ok($"El área de un triangulo cuya base es {triangle.baseTriangle} y su altura es {triangle.heightTriangle} es {areaTriangle}^2");
   }
 
 }

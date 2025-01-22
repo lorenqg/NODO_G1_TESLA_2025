@@ -1,8 +1,6 @@
-using System;
+namespace TeslaACDC.Data.DTO;
 
-namespace TeslaACDC.Data.Models;
-
-public class DtoSidesSquare
+public struct SidesSquare
 {
   public float sideLenght_1 { get; set; }
   public float sideLenght_2 { get; set; }

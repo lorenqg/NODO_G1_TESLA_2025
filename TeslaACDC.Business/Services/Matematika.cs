@@ -1,31 +1,33 @@
-using System;
-using TeslaACDC.Data.Models;
+using TeslaACDC.Data.DTO;
 
 namespace TeslaACDC.Business.Services;
 
 public class Matematika : IMatematika
 {
-   public async Task<float> Addition(DtoAddition dtoAddition)
+   public async Task<float> Addition(Addition addition)
     {
-        var addition = dtoAddition.number_1 + dtoAddition.number_2;
-        return addition;
+        var resultAddition = addition.number_1 + addition.number_2;
+        return resultAddition;
     }
 
-    public async Task<float> AreaSquare(DtoSquare dtoSquare)
+    public async Task<float> AreaSquare(Square square)
     {
-      var square = dtoSquare.sideLenght * dtoSquare.sideLenght;
-      return square;
+      var resultSquare = square.sideLenght * square.sideLenght;
+      return resultSquare;
     }
-    public async Task<float> AreaSidesSquare(DtoSidesSquare dtoSidesSquare)
+    public async Task<float> AreaSidesSquare(SidesSquare sidesSquare)
     {
-      var square = (dtoSidesSquare.sideLenght_1 + dtoSidesSquare.sideLenght_2 + dtoSidesSquare.sideLenght_3 + dtoSidesSquare.sideLenght_4) / 2;
-      return square;
+      if (sidesSquare.sideLenght_1 == sidesSquare.sideLenght_2 && sidesSquare.sideLenght_1 == sidesSquare.sideLenght_3 && sidesSquare.sideLenght_1 == sidesSquare.sideLenght_4){
+        return sidesSquare.sideLenght_1 * sidesSquare.sideLenght_2;
+      } else {
+        return 0;
+      }
     }
 
-    public async Task<float> AreaTriangle (DtoTriangle dtoTriangle)
+    public async Task<float> AreaTriangle (Triangle triangle)
     {
-      var triangle = dtoTriangle.baseTriangle * dtoTriangle.heightTriangle/2;
-      return triangle;
+      var resultTriangle = triangle.baseTriangle * triangle.heightTriangle/2;
+      return resultTriangle;
     }
 
     

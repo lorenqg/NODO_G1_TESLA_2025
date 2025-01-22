@@ -1,11 +1,10 @@
-using TeslaACDC.Data.Models;
-
+using TeslaACDC.Data.DTO;
 public interface IMatematika
 {
   
-  Task<float> Addition(DtoAddition dtoAddition);
-  Task<float> AreaSquare(DtoSquare dtoSquare);
-  Task<float> AreaSidesSquare(DtoSidesSquare dtoSidesSquare);
-  Task<float> AreaTriangle(DtoTriangle dtoTriangle);
+  Task<float> Addition(Addition addition);
+  Task<float> AreaSquare(Square square);
+  Task<float> AreaSidesSquare(SidesSquare sidesSquare);
+  Task<float> AreaTriangle(Triangle triangle);
 
 }

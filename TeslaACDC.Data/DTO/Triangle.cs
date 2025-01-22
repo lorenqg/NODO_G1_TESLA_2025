@@ -1,8 +1,6 @@
-using System;
+namespace TeslaACDC.Data.DTO;
 
-namespace TeslaACDC.Data.Models;
-
-public class DtoTriangle
+public struct Triangle
 {
 
   public float baseTriangle { get; set; }

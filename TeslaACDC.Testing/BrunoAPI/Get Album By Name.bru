@@ -1,0 +1,15 @@
+meta {
+  name: Get Album By Name
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://localhost:5019/api/tesla/getalbumbyname?name=smith
+  body: none
+  auth: none
+}
+
+params:query {
+  name: smith
+}

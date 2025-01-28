@@ -1,0 +1,15 @@
+meta {
+  name: Get Albums By Year
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:5019/api/tesla/getalbumsbyyear?year=2013
+  body: none
+  auth: none
+}
+
+params:query {
+  year: 2013
+}

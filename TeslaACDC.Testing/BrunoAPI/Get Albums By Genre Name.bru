@@ -1,0 +1,15 @@
+meta {
+  name: Get Albums By Genre Name
+  type: http
+  seq: 13
+}
+
+get {
+  url: http://localhost:5019/api/tesla/getalbumsbygenre?genre=rock
+  body: none
+  auth: none
+}
+
+params:query {
+  genre: rock
+}

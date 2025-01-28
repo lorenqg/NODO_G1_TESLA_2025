@@ -1,0 +1,16 @@
+meta {
+  name: Get Albums Between Years
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:5019/api/tesla/getalbumsbtyears?yearOne=1990&yearTwo=2021
+  body: none
+  auth: none
+}
+
+params:query {
+  yearOne: 1990
+  yearTwo: 2021
+}

@@ -23,55 +23,62 @@ public class TeslaController : ControllerBase
   [Route("GetAlbums")]
   public async Task<IActionResult> GetAlbumList()
   {
-    var list = await _albumService.GetAlbumList();
-
-    return Ok(list);
+    return Ok(await _albumService.GetAlbumList());
   }
 
   [HttpPost]
   [Route("PostAlbums")]
-  public async Task<IActionResult> PostAlbumsList(List<Album> albums)
+  public async Task<IActionResult> PostAlbumsList()
   {
-    var list = await _albumService.PostAlbumList(albums);
-
-    return Ok(list);
+    return Ok(await _albumService.PostAlbum());
   }
 
-
-  [HttpPost]
-  [Route("Addition")]
-  public async Task<IActionResult> Addition(Addition addition)
+  [HttpGet]
+  [Route("GetAlbumById")]
+  public async Task<IActionResult> GetAlbumById(int id)
   {
-    var resAddition = await _matematikaService.Addition(addition);
-    return Ok($"La suma de {addition.number_1} + {addition.number_2} = { resAddition }");
+    var response = await _albumService.GetAlbumById(id);
+    return StatusCode((int)response.StatusCode, response);
   }
 
-  [HttpPost]
-  [Route("AreaSquare")]
-  public async Task<IActionResult> AreaSquare(Square square)
+  [HttpGet]
+  [Route("GetAlbumByName")]
+  public async Task<IActionResult> GetAlbumByName(string name)
   {
-    var areaSquare = await _matematikaService.AreaSquare(square);
-    return Ok($"El área de un cuadrado cuyo lado mide {square.sideLenght} es : {areaSquare}^2");
+    var response = await _albumService.GetAlbumByName(name);
+    return StatusCode((int)response.StatusCode, response);
   }
 
-  [HttpPost]
-  [Route("AreaSidesSquare")]
-  public async Task<IActionResult> AreaSidesSquare(SidesSquare sidesSquare)
+  [HttpGet]
+  [Route("GetAlbumsByYear")]
+  public async Task<IActionResult> GetAlbumsByYear(int year)
   {
-    var areaSidesSquare = await _matematikaService.AreaSidesSquare(sidesSquare);
-    if ( areaSidesSquare == 0 ){
-      return Ok("Un cuadrado debe tener todos los lados iguales");
-    } else {
-      return Ok($"Los lados del cuadrado son {sidesSquare.sideLenght_1}, {sidesSquare.sideLenght_2}, {sidesSquare.sideLenght_3}, {sidesSquare.sideLenght_4} y su área es: {areaSidesSquare}^2");
-    }
+    var response = await _albumService.GetAlbumsByYear(year);
+    return StatusCode((int)response.StatusCode, response);
   }
 
-  [HttpPost]
-  [Route("AreaTriangle")]
-  public async Task<IActionResult> AreaTriangle(Triangle triangle)
+  [HttpGet]
+  [Route("GetAlbumsBtYears")]
+  public async Task<IActionResult> GetAlbumBtName(int yearOne,int yearTwo)
   {
-    var areaTriangle = await _matematikaService.AreaTriangle(triangle);
-    return Ok($"El área de un triangulo cuya base es {triangle.baseTriangle} y su altura es {triangle.heightTriangle} es {areaTriangle}^2");
+    var response = await _albumService.GetAlbumsBetweenYears(yearOne, yearTwo);
+    return StatusCode((int)response.StatusCode, response);
+  }
+
+  [HttpGet]
+  [Route("GetAlbumsByGenre")]
+  public async Task<IActionResult> GetAlbumByGenre(int? genreId, string? genre)
+  {
+    var response = await _albumService.GetAlbumsByGenre(genreId, genre);
+    return StatusCode((int)response.StatusCode, response);
+  }
+
+  [HttpGet]
+  [Route("GetAlbumsByArtist")]
+  public async Task<IActionResult> GetAlbumsByArtist(string artist)
+  {
+    var response = await _albumService.GetAlbumsByArtist(artist);
+    return StatusCode((int)response.StatusCode, response);
   }
 
 }

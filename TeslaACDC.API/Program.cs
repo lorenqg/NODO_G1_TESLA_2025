@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using TeslaACDC.Business.Interfaces;
 using TeslaACDC.Business.Services;
 
@@ -9,9 +10,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddDbContext<NikolaContext>(
+    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("NikolaDatabase"))
+);
+
 // Inyección de dependencias
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<IMatematika, Matematika>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
 
 var app = builder.Build();
 

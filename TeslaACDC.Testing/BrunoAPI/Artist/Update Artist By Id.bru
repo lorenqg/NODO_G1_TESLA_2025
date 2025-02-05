@@ -1,0 +1,24 @@
+meta {
+  name: Update Artist By Id
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:5019/api/artist/updatebyid?id=2
+  body: json
+  auth: none
+}
+
+params:query {
+  id: 2
+}
+
+body:json {
+  {
+    "Name": "The Weeknd",
+    "Label": "XO",
+    "IsOnTour": true,
+    "Id": 2
+  }
+}

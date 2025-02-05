@@ -1,0 +1,24 @@
+meta {
+  name: Update Album By Id
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:5019/api/album/updatebyid?id=3
+  body: json
+  auth: none
+}
+
+params:query {
+  id: 3
+}
+
+body:json {
+  {
+    "name": "After Hours",
+    "year": 2024,
+    "genre": 11,
+    "Id": 3
+  }
+}

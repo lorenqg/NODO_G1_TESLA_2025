@@ -1,0 +1,19 @@
+meta {
+  name: Add Artist
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5019/api/artist/addartist
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name": "Arctic Monkeys",
+    "Label": "Dominio Records",
+    "IsOnTour": false
+  }
+}

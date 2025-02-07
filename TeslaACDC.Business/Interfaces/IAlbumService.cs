@@ -9,4 +9,10 @@ public interface IAlbumService
   public Task<BaseMessage<Album>> FindById(int id);
   public Task<BaseMessage<Album>> UpdateAlbum(int id, Album album);
   public Task<BaseMessage<Album>> DeleteById(int id);
+
+  #region learning to Test
+  public Task<string> HealthCheckTest();
+  public Task<string> TestAlbumCreation(Album album);
+  #endregion
+
 }

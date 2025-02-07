@@ -8,7 +8,7 @@ public class AlbumRepository<TId, TEntity> : IAlbumRepository<TId, TEntity>
 where TId : struct
 where TEntity : BaseEntity<TId>
 {
-  private readonly NikolaContext _context;
+  internal NikolaContext _context;
   internal DbSet<TEntity> _dbset;
 
   public AlbumRepository(NikolaContext context)

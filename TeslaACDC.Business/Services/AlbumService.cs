@@ -8,13 +8,11 @@ namespace TeslaACDC.Business.Services;
 
 public class AlbumService : IAlbumService
 {
-    private readonly NikolaContext _context;
     private IAlbumRepository<int, Album> _albumRepository;
 
-    public AlbumService(NikolaContext context)
+    public AlbumService(IAlbumRepository<int, Album> albumRepository)
     {
-        _context = context;
-        _albumRepository = new AlbumRepository<int, Album>(_context);
+       _albumRepository = albumRepository;
     }
 
     public async Task<BaseMessage<Album>> GetAlbums()
@@ -26,6 +24,12 @@ public class AlbumService : IAlbumService
 
     public async Task<BaseMessage<Album>> AddAlbum(Album album)
     {
+        var isValid = ValidateModel(album);
+        if(string.IsNullOrEmpty(isValid))
+        {
+            return BuildResponse(null, isValid, HttpStatusCode.BadRequest, new());
+        }
+
         await _albumRepository.AddAsync(album);
         
         if (album == null) {
@@ -75,4 +79,37 @@ public class AlbumService : IAlbumService
             ResponseElements = list
         };
     }
+
+    private string ValidateModel(Album album)
+    {
+        string message = string.Empty;
+
+        if(string.IsNullOrEmpty(album.name))
+        {
+            message = "El nombre es requerido";
+        }
+        if(album.year < 1901 || album.year > 2025)
+        {
+            message = "El año del disco debe estar entre 1901 y 2025";
+        }
+        return message;
+    }
+
+    #region Learning to Test
+    public async Task<string> HealthCheckTest()
+    {
+        return "Ok";
+    }
+
+    public async Task<string> HealthCheckTest(bool IsOK)
+    {
+        return IsOK ? "OK!" : "Not cool";
+    }
+
+    public async Task<string> TestAlbumCreation(Album album)
+    {
+        return ValidateModel(album);
+    }
+
+    #endregion
 }

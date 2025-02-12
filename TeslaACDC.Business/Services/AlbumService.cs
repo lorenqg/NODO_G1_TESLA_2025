@@ -2,7 +2,6 @@ using System.Net;
 using TeslaACDC.Business.Interfaces;
 using TeslaACDC.Data.Models;
 using TeslaACDC.Data.IRepository;
-using TeslaACDC.Data.Repository;
 
 namespace TeslaACDC.Business.Services;
 

@@ -2,18 +2,16 @@ using System.Net;
 using TeslaACDC.Business.Interfaces;
 using TeslaACDC.Data.Models;
 using TeslaACDC.Data.IRepository;
-using TeslaACDC.Data.Repository;
+
 namespace TeslaACDC.Business.Services;
 
 public class ArtistService : IArtistService
 {
-  private readonly NikolaContext _context;
   private IArtistRepository<int, Artist> _artistRepository;
 
-  public ArtistService(NikolaContext context)
+  public ArtistService(IArtistRepository<int, Artist> artistRepository)
   {
-    _context = context;
-    _artistRepository = new ArtistRepository<int, Artist>(_context);
+    _artistRepository = artistRepository;
   }
 
     public async Task<BaseMessage<Artist>> GetArtists()
@@ -25,8 +23,14 @@ public class ArtistService : IArtistService
 
     public async Task<BaseMessage<Artist>> AddArtist(Artist artist)
     {
-       await _artistRepository.AddAsync(artist);
-       if (artist == null) {
+        var isValid = ValidateModel(artist);
+        if (string.IsNullOrEmpty(isValid))
+        {
+            return BuildResponse(null, isValid, HttpStatusCode.BadRequest, new());
+        }
+        await _artistRepository.AddAsync(artist);
+        
+        if (artist == null) {
             return BuildResponse(new (), "", HttpStatusCode.BadRequest);
         }
 
@@ -72,4 +76,22 @@ public class ArtistService : IArtistService
             ResponseElements = list
         };
     }
+
+    private string ValidateModel (Artist artist)
+    {
+        string message = string.Empty;
+
+        if (string.IsNullOrEmpty(artist.Name))
+        {
+            message = "El nombre es requerido";
+        }
+        return message;
+    }
+
+    #region learning to Test
+    public async Task<string> TestArtistCreation(Artist artist)
+    {
+        return ValidateModel(artist);
+    }
+    #endregion
 }

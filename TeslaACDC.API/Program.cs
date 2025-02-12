@@ -18,6 +18,7 @@ builder.Services.AddDbContext<NikolaContext>(
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<IMatematika, Matematika>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<ISongService, SongService>();
 
 var app = builder.Build();
 

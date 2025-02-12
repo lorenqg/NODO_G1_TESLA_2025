@@ -10,6 +10,7 @@ public class NikolaContext : DbContext
     
     public DbSet<Album> Albums {get;set;}
     public DbSet<Artist> Artists{get;set;}
+    public DbSet<Song> Songs{get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -20,6 +21,7 @@ public class NikolaContext : DbContext
 
         builder.Entity<Album>().ToTable("Album").HasKey(k => k.Id);
         builder.Entity<Artist>().ToTable("Artist").HasKey(k => k.Id);
+        builder.Entity<Song>().ToTable("Song").HasKey(k => k.Id);
         base.OnModelCreating(builder);
 
     }
